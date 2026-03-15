@@ -80,7 +80,7 @@
 			<td style="padding:16px;width:85%;vertical-align:middle">
 			
 			<p>
-			<strong>B.S. in Mechanics & Vehicle Engineering</strong>, Tsinghua University
+			B.S. in Mechanics & Vehicle Engineering, Tsinghua University
 			<span style="float:right;">2022–2026 (expected)</span>
 			</p>
 			
@@ -119,47 +119,42 @@
      <table style="width:100%;border:0px;border-spacing:0px 10px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 				
 
-<tr onmouseout="zipmap_stop()" onmouseover="zipmap_start()">
+<tr>
   <td style="padding:16px;width:20%;vertical-align:middle">
-    <div class="one">
-      <div class="two" id='zipmap_image'><video  width=100% height=100% muted autoplay loop>
-      <source src="images/zipmap.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-      </video></div>
-      <img src='images/zipmap.jpg' width="160">
-    </div>
-    <script type="text/javascript">
-      function zipmap_start() {
-        document.getElementById('zipmap_image').style.opacity = "1";
-      }
-
-      function zipmap_stop() {
-        document.getElementById('zipmap_image').style.opacity = "0";
-      }
-      zipmap_stop()
-    </script>
+    <img src="image/egoprox.png" width="160">
   </td>
+
   <td style="padding:20px;width:75%;vertical-align:middle">
-    <a href="https://haian-jin.github.io/ZipMap/">
-      <span class="papertitle">ZipMap: Linear-Time Stateful 3D Reconstruction via Test-Time Training</span>
+    <a href="#">
+      <span class="papertitle">EgoProx: Evaluating MLLMs on Egocentric 3D Proximity Reasoning Across a Cognitive Hierarchy</span>
     </a>
     <br>
-    <a href="https://haian-jin.github.io/">Haian Jin</a>,
-    <a href="https://rundiwu.github.io/">Rundi Wu</a>,
-    <a href="https://tianyuanzhang.com/">Tianyuan Zhang</a>,
-    <a href="https://ruiqigao.github.io/">Ruiqi Gao</a>, <br>
-    <strong>Jonathan T. Barron</strong>,
-    <a href="https://www.cs.cornell.edu/~snavely/">Noah Snavely</a>,
-    <a href="https://holynski.org/">Aleksander Hołyński</a>
+
+    <strong>Jinzhao Li</strong><sup>1,2</sup>,
+    Yinuo Chen<sup>1*</sup>,
+    Dongxu Piao<sup>1*</sup>,
+    Panwang Pan<sup>2</sup>,
+    Yifan Yu<sup>2</sup>,
+    Dong Wang<sup>2</sup>,
+    Honglei Yan<sup>2</sup>,
+    Liang Yue<sup>1</sup>,
+    Shaofei Wang<sup>3</sup>,
+    Yixin Chen<sup>3</sup>,
+    Siyuan Huang<sup>3</sup>,
+    Miao Liu<sup>1†</sup>
     <br>
+
     <em>CVPR</em>, 2026
     <br>
-    <a href="https://haian-jin.github.io/ZipMap/">project page</a> /
-    <a href="https://arxiv.org/abs/2603.04385">arXiv</a> /
-    <a href="https://github.com/Haian-Jin/ZipMap">code</a>
+
+    <a href="#">project page</a> /
+    <a href="#">arXiv</a> /
+    <a href="#">code</a>
+
     <p></p>
+
     <p>
-		Test-time training lets you quickly compress an entire image collection into a compact model and thereby achieve linear-time 3D reconstruction.
+      We introduce EgoProx, a benchmark for egocentric 3D proximity reasoning that evaluates whether MLLMs can reason about spatial relations between the human body and surrounding objects across a cognitive hierarchy of intention, exploration, exploitation, and chain of actions.
     </p>
   </td>
 </tr>
