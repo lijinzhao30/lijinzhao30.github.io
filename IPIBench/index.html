@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="IPIBench evaluates Interactive Proactive Intelligence of multimodal large language models under continuous video streams.">
+  <meta property="og:title" content="IPIBench — Interactive Proactive Intelligence under Continuous Streams">
+  <meta property="og:description" content="A benchmark and agentic framework for proactive, interactive streaming MLLMs.">
+  <meta property="og:image" content="IPIBench.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f7f8fc">
+  <title>IPIBench — Interactive Proactive Intelligence under Continuous Streams</title>
+  <style>
+    :root {
+      --ink: #14263d;
+      --muted: #64748b;
+      --paper: #ffffff;
+      --wash: #f5f7fb;
+      --line: #dfe5ef;
+      --purple: #7047eb;
+      --purple-soft: #eee9ff;
+      --green: #16a463;
+      --green-soft: #e6f8ef;
+      --cyan: #1599bc;
+      --cyan-soft: #e7f7fb;
+      --orange: #f0a11b;
+      --red: #d85050;
+      --shadow: 0 24px 70px rgba(28, 45, 74, .10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+    img, video { display: block; max-width: 100%; }
+    button { font: inherit; }
+    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      color: var(--purple);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 2px; background: currentColor; }
+    .section-head { max-width: 760px; margin-bottom: 40px; }
+    .section-head.center { margin-inline: auto; text-align: center; }
+    .section-head.center .eyebrow::before { display: none; }
+    h1, h2, h3, p { margin-top: 0; }
+    h2 { margin-bottom: 14px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.04; letter-spacing: -.045em; }
+    h3 { line-height: 1.25; }
+    .section-head p { margin-bottom: 0; color: var(--muted); font-size: 1.06rem; }
+    .section { padding: 108px 0; }
+    .section.alt { background: var(--wash); }
+
+    .nav {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      height: 70px;
+      border-bottom: 1px solid rgba(223, 229, 239, .8);
+      background: rgba(255, 255, 255, .86);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .wordmark { font-size: 1.05rem; font-weight: 900; letter-spacing: -.03em; text-decoration: none; }
+    .wordmark span:nth-child(1) { color: var(--purple); }
+    .wordmark span:nth-child(2) { color: var(--green); }
+    .wordmark span:nth-child(3) { color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 23px; }
+    .nav-links a { color: #4c5c70; font-size: .88rem; font-weight: 650; text-decoration: none; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--purple); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 90px 0 76px;
+      background:
+        radial-gradient(circle at 10% 22%, rgba(112, 71, 235, .13), transparent 27%),
+        radial-gradient(circle at 88% 20%, rgba(21, 153, 188, .13), transparent 26%),
+        linear-gradient(180deg, #fbfbfe 0%, #fff 78%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .30;
+      background-image: linear-gradient(rgba(45, 68, 99, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 68, 99, .08) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 76%);
+    }
+    .hero-inner { position: relative; z-index: 1; text-align: center; }
+    h1 {
+      max-width: 1060px;
+      margin: 0 auto 26px;
+      font-size: clamp(2.8rem, 6vw, 5.9rem);
+      line-height: 1;
+      letter-spacing: -.07em;
+    }
+    .title-prefix {
+      display: block;
+      margin-bottom: 6px;
+      font-size: clamp(2.4rem, 4.7vw, 4.35rem);
+      line-height: 1.03;
+      letter-spacing: -.065em;
+    }
+    .title-prefix .c-i1 { color: var(--purple); }
+    .title-prefix .c-p { color: var(--green); }
+    .title-prefix .c-i2 { color: var(--cyan); }
+    .title-evaluating {
+      display: block;
+      margin-bottom: 9px;
+      font-size: clamp(2.15rem, 4.2vw, 3.8rem);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+    }
+    .ipi-title {
+      display: block;
+      margin-bottom: 12px;
+      font-size: clamp(2.4rem, 4.7vw, 4.35rem);
+      line-height: 1.04;
+    }
+    .letter {
+      display: inline-flex;
+      width: .86em;
+      aspect-ratio: 1;
+      align-items: center;
+      justify-content: center;
+      margin-right: .02em;
+      color: white;
+      border-radius: .18em;
+      box-shadow: 0 13px 30px rgba(28,45,74,.16);
+    }
+    .letter.i1 { background: var(--purple); transform: rotate(-2deg); }
+    .letter.p { background: var(--green); transform: rotate(1deg); }
+    .letter.i2 { background: var(--cyan); transform: rotate(-1deg); }
+    .rest { color: var(--ink); }
+    .subtitle { display: block; font-size: clamp(1.8rem, 3.6vw, 3.45rem); line-height: 1.05; letter-spacing: -.045em; }
+    .authors { max-width: 900px; margin: 0 auto 8px; color: #35465c; font-size: 1.05rem; }
+    .affiliations { margin-bottom: 26px; color: var(--muted); font-size: .92rem; }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+    .btn {
+      display: inline-flex;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 135px;
+      padding: 12px 19px;
+      border: 1px solid #cad3e1;
+      border-radius: 12px;
+      color: var(--ink);
+      background: white;
+      box-shadow: 0 8px 24px rgba(26, 42, 69, .07);
+      font-weight: 760;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: #9ba9bc; box-shadow: 0 14px 30px rgba(26,42,69,.12); }
+    .btn.primary { color: white; background: var(--ink); border-color: var(--ink); }
+    .btn svg { width: 19px; height: 19px; }
+    .btn.disabled { cursor: default; color: #78879a; background: #f7f8fa; border-color: #e0e5eb; box-shadow: none; }
+    .btn.disabled:hover { transform: none; }
+    .soon {
+      position: absolute;
+      top: -9px;
+      right: -9px;
+      padding: 3px 7px;
+      color: white;
+      background: var(--purple);
+      border-radius: 999px;
+      font-size: .55rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 760px; margin: 60px auto 0; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.83); box-shadow: var(--shadow); }
+    .hero-stat { padding: 19px 22px; }
+    .hero-stat + .hero-stat { border-left: 1px solid var(--line); }
+    .hero-stat strong { display: block; font-size: 1.75rem; line-height: 1.2; letter-spacing: -.04em; }
+    .hero-stat span { color: var(--muted); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+    .abstract-grid { display: grid; grid-template-columns: .68fr 1.32fr; gap: 70px; align-items: start; }
+    .abstract-grid .section-head { position: sticky; top: 105px; }
+    .abstract-copy { color: #35465b; font-size: 1.15rem; line-height: 1.82; }
+    .abstract-copy strong { color: var(--ink); }
+    .contributions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 35px; }
+    .contribution { padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .contribution b { display: block; margin-bottom: 7px; font-size: .98rem; }
+    .contribution p { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.55; }
+    .contribution:nth-child(1) { border-top: 4px solid var(--purple); }
+    .contribution:nth-child(2) { border-top: 4px solid var(--green); }
+    .contribution:nth-child(3) { border-top: 4px solid var(--cyan); }
+
+    .media-frame { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+    .media-frame img { width: 100%; }
+    .media-caption { display: flex; justify-content: space-between; gap: 28px; padding: 22px 25px 24px; border-top: 1px solid var(--line); }
+    .media-caption strong { flex: 0 0 180px; }
+    .media-caption span { color: var(--muted); font-size: .91rem; }
+    .video-frame { position: relative; overflow: hidden; border-radius: var(--radius); background: #0e1625; box-shadow: var(--shadow); }
+    .video-frame video { width: 100%; aspect-ratio: 16/9; background: #0e1625; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .chart-card { min-width: 0; padding: 27px; border: 1px solid var(--line); border-radius: 20px; background: white; box-shadow: 0 14px 40px rgba(28,45,74,.06); }
+    .chart-card h3 { margin-bottom: 5px; font-size: 1.2rem; letter-spacing: -.02em; }
+    .chart-card > p { color: var(--muted); font-size: .85rem; }
+    .donut-wrap { position: relative; width: 178px; margin: 26px auto 22px; }
+    .donut { width: 178px; transform: rotate(-90deg); }
+    .donut circle { fill: none; stroke-width: 16; }
+    .donut .track { stroke: #eef1f5; }
+    .donut .seg { stroke-dasharray: var(--dash) 100; stroke-dashoffset: var(--offset); stroke-linecap: butt; transition: stroke-dasharray 1.1s cubic-bezier(.2,.7,.2,1); }
+    .reveal:not(.in-view) .donut .seg { stroke-dasharray: 0 100; }
+    .donut-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+    .donut-label strong { font-size: 1.8rem; line-height: 1.1; }
+    .donut-label span { color: var(--muted); font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .legend { display: grid; gap: 10px; }
+    .legend-row { display: grid; grid-template-columns: 10px 1fr auto; gap: 9px; align-items: center; font-size: .78rem; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+    .legend-row span:nth-child(2) { color: #4b5a6d; }
+    .legend-row b { font-variant-numeric: tabular-nums; }
+    .bar-list { display: grid; gap: 14px; margin-top: 26px; }
+    .bar-meta { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 5px; color: #536276; font-size: .76rem; }
+    .bar-meta b { color: var(--ink); }
+    .bar-track { overflow: hidden; height: 8px; border-radius: 999px; background: #edf1f5; }
+    .bar-fill { height: 100%; width: var(--w); border-radius: inherit; background: linear-gradient(90deg, var(--purple), #9c7df2); transform-origin: left; transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+    .reveal:not(.in-view) .bar-fill { transform: scaleX(0); }
+    .source-split { display: flex; overflow: hidden; height: 58px; margin: 31px 0 23px; border-radius: 12px; color: white; font-weight: 850; }
+    .source-split span { display: grid; place-content: center; width: var(--w); transform-origin: left; transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+    .source-split span:first-child { background: var(--green); }
+    .source-split span:last-child { background: var(--cyan); }
+    .reveal:not(.in-view) .source-split span { transform: scaleX(0); }
+    .source-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .source-chip { padding: 8px 9px; border-radius: 9px; background: var(--wash); color: #58677a; font-size: .68rem; line-height: 1.3; }
+    .source-chip b { display: block; color: var(--ink); font-size: .78rem; }
+
+    .agent-grid { display: grid; grid-template-columns: .74fr 1.26fr; gap: 46px; align-items: center; }
+    .agent-points { display: grid; gap: 18px; margin-top: 28px; }
+    .agent-point { display: grid; grid-template-columns: 38px 1fr; gap: 14px; }
+    .agent-point .num { display: grid; place-content: center; width: 38px; height: 38px; border-radius: 11px; color: white; background: var(--ink); font-weight: 850; }
+    .agent-point:nth-child(2) .num { background: var(--green); }
+    .agent-point:nth-child(3) .num { background: var(--cyan); }
+    .agent-point b { display: block; margin-bottom: 3px; }
+    .agent-point p { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+    .agent-figure { overflow: hidden; padding: 12px; border: 1px solid var(--line); border-radius: 20px; background: white; box-shadow: var(--shadow); }
+    .agent-figure img { border-radius: 12px; }
+
+    .results-head { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 28px; }
+    .results-head .section-head { margin: 0; }
+    .legend-note { flex: 0 0 auto; color: var(--muted); font-size: .78rem; }
+    .legend-note i { display: inline-block; width: 12px; height: 12px; margin: 0 5px -2px 0; border-radius: 3px; background: #f9d7dc; }
+    .table-shell { overflow: hidden; border: 1px solid var(--line); border-radius: 17px; background: white; box-shadow: 0 16px 45px rgba(27,45,73,.07); }
+    .table-scroll { overflow-x: auto; scrollbar-color: #b9c3d0 transparent; }
+    table { width: 100%; min-width: 1120px; border-collapse: collapse; font-size: .79rem; font-variant-numeric: tabular-nums; }
+    th, td { padding: 10px 9px; border-bottom: 1px solid #e8ecf2; text-align: center; white-space: nowrap; }
+    th { color: #34455a; background: #f7f8fb; font-weight: 800; }
+    thead tr:first-child th:first-child,
+    tbody td:first-child { position: sticky; z-index: 2; left: 0; min-width: 205px; text-align: left; background: inherit; }
+    thead tr:first-child th:first-child { z-index: 3; }
+    thead tr:nth-child(2) th:first-child { position: static; min-width: 0; text-align: center; }
+    tbody tr { background: white; }
+    tbody tr:hover { background: #fafbfe; }
+    .group td { padding: 8px 12px; color: #536276; background: #f3f5f8 !important; font-size: .72rem; font-weight: 850; letter-spacing: .05em; text-transform: uppercase; }
+    .group td:first-child { position: static; text-align: left; }
+    .human { font-weight: 760; }
+    .best { background: #f9d7dc !important; color: #8f2834; font-weight: 850; }
+    .metric-group-purple { background: var(--purple-soft); }
+    .metric-group-green { background: var(--green-soft); }
+    .metric-group-cyan { background: var(--cyan-soft); }
+    .table-foot { display: flex; justify-content: space-between; gap: 30px; padding: 13px 17px; color: var(--muted); background: #fafbfc; font-size: .72rem; }
+
+    .gain-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; }
+    .gain-card { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: white; }
+    .gain-card span { color: var(--muted); font-size: .75rem; }
+    .gain-card strong { display: block; margin-top: 3px; color: var(--green); font-size: 1.6rem; letter-spacing: -.04em; }
+    .gain-card small { display: block; color: #526176; }
+    .gain { display: block; color: var(--green); font-size: .68rem; font-weight: 800; line-height: 1.2; }
+    .agent-table tbody tr:nth-child(odd) { background: #fbfcfe; }
+
+    .ablation-layout { display: grid; grid-template-columns: 330px 1fr; gap: 24px; align-items: stretch; }
+    .ablation-callout { padding: 28px; border-radius: 18px; color: white; background: var(--ink); }
+    .ablation-callout .big { display: block; margin: 20px 0 2px; color: #7cf0b2; font-size: 3.3rem; font-weight: 900; line-height: 1; letter-spacing: -.06em; }
+    .ablation-callout p { margin-bottom: 0; color: #c7d1df; font-size: .91rem; }
+    .negative { color: var(--red); font-weight: 800; }
+
+    .citation-card { display: grid; grid-template-columns: .64fr 1.36fr; gap: 52px; align-items: center; padding: 48px; border: 1px solid #313e52; border-radius: 22px; color: white; background: #111d2f; box-shadow: var(--shadow); }
+    .citation-card h2 { margin-bottom: 13px; }
+    .citation-card p { color: #aebacc; }
+    .code-wrap { position: relative; overflow: hidden; border: 1px solid #34435a; border-radius: 14px; background: #0b1421; }
+    pre { overflow-x: auto; margin: 0; padding: 26px; color: #dce7f5; font: .78rem/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .copy-btn { position: absolute; top: 12px; right: 12px; padding: 7px 10px; border: 1px solid #46566d; border-radius: 8px; color: #d9e4f2; background: #18263a; cursor: pointer; font-size: .7rem; font-weight: 800; }
+    .copy-btn:hover { background: #22334b; }
+    footer { padding: 35px 0; color: var(--muted); font-size: .82rem; text-align: center; }
+
+    .reveal { opacity: 1; transform: none; }
+    .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+    .js .reveal.in-view { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .nav-links a:nth-child(-n+3) { display: none; }
+      .abstract-grid, .agent-grid, .citation-card { grid-template-columns: 1fr; }
+      .abstract-grid { gap: 28px; }
+      .abstract-grid .section-head { position: static; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .chart-card:last-child { grid-column: 1 / -1; }
+      .gain-cards { grid-template-columns: 1fr 1fr; }
+      .ablation-layout { grid-template-columns: 1fr; }
+      .citation-card { gap: 25px; }
+    }
+
+    @media (max-width: 700px) {
+      .container { width: min(100% - 24px, 1180px); }
+      .nav { height: 62px; }
+      .nav-links a { display: none !important; }
+      .nav-links a:last-child { display: inline-flex !important; }
+      .hero { padding: 65px 0 54px; }
+      h1 { font-size: clamp(2.75rem, 15vw, 4.5rem); }
+      .title-prefix { font-size: 2.45rem; }
+      .title-evaluating { font-size: 2.05rem; }
+      .ipi-title { font-size: 2.45rem; }
+      .subtitle { font-size: 1.55rem; }
+      .authors { font-size: .91rem; }
+      .hero-stats { grid-template-columns: 1fr; margin-top: 42px; }
+      .hero-stat + .hero-stat { border-top: 1px solid var(--line); border-left: 0; }
+      .section { padding: 76px 0; }
+      .contributions, .stats-grid, .gain-cards { grid-template-columns: 1fr; }
+      .chart-card:last-child { grid-column: auto; }
+      .media-caption, .results-head, .table-foot { flex-direction: column; align-items: flex-start; }
+      .media-caption strong { flex-basis: auto; }
+      .citation-card { padding: 28px 18px; }
+      pre { padding: 22px 17px; font-size: .68rem; }
+      .copy-btn { position: static; margin: 12px 0 0 12px; }
+      .source-list { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="container nav-inner">
+      <a class="wordmark" href="#top" aria-label="IPIBench home"><span>I</span><span>P</span><span>I</span>Bench</a>
+      <div class="nav-links">
+        <a href="#benchmark">Benchmark</a>
+        <a href="#statistics">Statistics</a>
+        <a href="#agent">IPI-Agent</a>
+        <a href="#results">Results</a>
+        <a href="#bibtex">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="container hero-inner">
+      <h1>
+        <span class="title-prefix"><span class="c-i1">I</span><span class="c-p">P</span><span class="c-i2">I</span>Bench:</span>
+        <span class="title-evaluating">Evaluating</span>
+        <span class="ipi-title"><span class="letter i1">I</span><span class="rest">nteractive</span> <span class="letter p">P</span><span class="rest">roactive</span> <span class="letter i2">I</span><span class="rest">ntelligence</span></span>
+        <span class="subtitle">of MLLMs under Continuous Streams</span>
+      </h1>
+      <p class="authors">Jinzhao Li<sup>1,2</sup>, Yinuo Chen<sup>1</sup>, Wenxuan Song<sup>1</sup>, Yijia Lei<sup>1</sup>, Yichi Zhang<sup>1</sup>, Honglei Yan<sup>2</sup>, Panwang Pan<sup>2</sup>, Miao Liu<sup>1,†</sup></p>
+      <p class="affiliations"><sup>1</sup>College of AI, Tsinghua University &nbsp;·&nbsp; <sup>2</sup>ByteDance &nbsp;·&nbsp; <sup>†</sup>Corresponding author</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="paper.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h8l5 5v15H6V2Zm7 1.8V8h4.2L13 3.8ZM8.5 12h8v1.6h-8V12Zm0 3.4h8V17h-8v-1.6Z"/></svg>
+          Paper
+        </a>
+        <span class="btn disabled" aria-disabled="true">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .7A11.3 11.3 0 0 0 8.43 22.72c.57.1.78-.25.78-.55v-2.12c-3.18.69-3.85-1.35-3.85-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.03-.7.08-.69.08-.69 1.14.08 1.75 1.17 1.75 1.17 1.02 1.74 2.67 1.24 3.32.94.1-.73.4-1.23.72-1.51-2.53-.29-5.2-1.27-5.2-5.65 0-1.25.45-2.26 1.17-3.06-.12-.29-.5-1.45.11-3.02 0 0 .96-.3 3.14 1.17a10.9 10.9 0 0 1 5.72 0c2.18-1.48 3.14-1.17 3.14-1.17.61 1.57.23 2.73.11 3.02.73.8 1.17 1.81 1.17 3.06 0 4.39-2.67 5.35-5.21 5.64.41.35.77 1.05.77 2.13v3.15c0 .3.21.66.79.55A11.3 11.3 0 0 0 12 .7Z"/></svg>
+          Code <span class="soon">Coming soon</span>
+        </span>
+        <span class="btn disabled" aria-disabled="true"><span aria-hidden="true">🤗</span> Dataset <span class="soon">Coming soon</span></span>
+        <a class="btn" href="#demo">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7L8 5Z"/></svg>
+          Demo
+        </a>
+      </div>
+      <div class="hero-stats reveal">
+        <div class="hero-stat"><strong class="counter" data-count="1831">1,831</strong><span>continuous videos</span></div>
+        <div class="hero-stat"><strong class="counter" data-count="3738">3,738</strong><span>interactive QA instances</span></div>
+        <div class="hero-stat"><strong class="counter" data-count="3">3</strong><span>core task families</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="about">
+      <div class="container abstract-grid">
+        <div class="section-head reveal">
+          <span class="eyebrow">From reactive to proactive</span>
+          <h2>From answering to proactively responding.</h2>
+          <p>Real assistants must reason continuously, support multi-turn interaction, act at the right moment, and adapt as people change their minds.</p>
+        </div>
+        <div class="reveal">
+          <p class="abstract-copy">Recent MLLMs excel at reactive question answering, yet real-world streaming assistants need to proactively reason over continuous visual inputs, respond at the right moment, and coordinate with users across multi-turn interactions. <strong>IPIBench</strong> evaluates this shift in dynamic video settings where users can add, modify, or cancel proactive requests while interleaving reactive questions.</p>
+          <div class="contributions">
+            <article class="contribution"><b>IPIBench benchmark</b><p>We introduce the first benchmark for evaluating interactive proactive intelligence of MLLMs under streaming video settings, covering proactive monitoring, proactive task management, and interleaved reactive–proactive requests.</p></article>
+            <article class="contribution"><b>Systematic evaluation</b><p>We evaluate representative proprietary, open-source, and online streaming models, revealing unstable proactive triggering and weak multi-turn interaction coordination.</p></article>
+            <article class="contribution"><b>IPI-Agent framework</b><p>We propose a training-free agentic framework with an interaction-control policy and temporal-gating mechanism to improve triggering stability and multi-turn coordination.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="benchmark">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">IPIBench</span>
+          <h2>Evaluating Interactive Proactive Intelligence of MLLMs</h2>
+          <p>Three task families capture the shift from one-shot alerts to stateful, mixed-initiative interaction.</p>
+        </div>
+        <figure class="media-frame reveal">
+          <img src="IPIBench.png" alt="Overview of IPIBench task families and interaction patterns">
+          <figcaption class="media-caption"><strong>A benchmark for real streaming behavior</strong><span>Single-turn tasks test timing, understanding, and repeated triggering. Multi-turn tasks test cancellation, modification, multi-task management, and reactive–proactive coordination.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Demo</span>
+          <h2>See IPIBench and IPI-Agent in motion.</h2>
+          <p>A 3-minute walkthrough of our IPIBench and our IPI-Agent framework.</p>
+        </div>
+        <div class="video-frame reveal">
+          <video controls playsinline preload="none" poster="video-poster.jpg">
+            <source src="IPI_Demo.mp4" type="video/mp4">
+            Your browser does not support embedded video.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="statistics">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Dataset at a glance</span>
+          <h2>Diverse task types. Broad video sources.</h2>
+          <p>IPIBench spans 1,831 videos and 3,738 QA instances across rich task types and broad egocentric/exocentric sources.</p>
+        </div>
+        <div class="stats-grid">
+          <article class="chart-card reveal">
+            <h3>Task distribution</h3><p>Share of all QA instances</p>
+            <div class="donut-wrap">
+              <svg class="donut" viewBox="0 0 42 42" aria-label="Task category donut chart">
+                <circle class="track" cx="21" cy="21" r="15.9155"></circle>
+                <circle class="seg" cx="21" cy="21" r="15.9155" pathLength="100" style="--dash:46.71;--offset:0;stroke:var(--purple)"></circle>
+                <circle class="seg" cx="21" cy="21" r="15.9155" pathLength="100" style="--dash:25.07;--offset:-46.71;stroke:var(--green)"></circle>
+                <circle class="seg" cx="21" cy="21" r="15.9155" pathLength="100" style="--dash:28.22;--offset:-71.78;stroke:var(--cyan)"></circle>
+              </svg>
+              <div class="donut-label"><strong>3,738</strong><span>QA instances</span></div>
+            </div>
+            <div class="legend">
+              <div class="legend-row"><i class="dot" style="--c:var(--purple)"></i><span>Proactive Monitoring</span><b>46.71%</b></div>
+              <div class="legend-row"><i class="dot" style="--c:var(--green)"></i><span>Task Management</span><b>25.07%</b></div>
+              <div class="legend-row"><i class="dot" style="--c:var(--cyan)"></i><span>Interleaved Requests</span><b>28.22%</b></div>
+            </div>
+          </article>
+          <article class="chart-card reveal">
+            <h3>Video duration</h3><p>Durations range from short clips measured in seconds to long videos exceeding five minutes.</p>
+            <div class="bar-list">
+              <div><div class="bar-meta"><span>0–50 s</span><b>55.74%</b></div><div class="bar-track"><div class="bar-fill" style="--w:100%"></div></div></div>
+              <div><div class="bar-meta"><span>50–100 s</span><b>30.45%</b></div><div class="bar-track"><div class="bar-fill" style="--w:54.63%"></div></div></div>
+              <div><div class="bar-meta"><span>100–150 s</span><b>8.54%</b></div><div class="bar-track"><div class="bar-fill" style="--w:15.32%"></div></div></div>
+              <div><div class="bar-meta"><span>150–200 s</span><b>2.31%</b></div><div class="bar-track"><div class="bar-fill" style="--w:4.14%"></div></div></div>
+              <div><div class="bar-meta"><span>200–250 s</span><b>0.92%</b></div><div class="bar-track"><div class="bar-fill" style="--w:1.65%"></div></div></div>
+              <div><div class="bar-meta"><span>250–300 s</span><b>0.68%</b></div><div class="bar-track"><div class="bar-fill" style="--w:1.22%"></div></div></div>
+              <div><div class="bar-meta"><span>≥ 300 s</span><b>1.36%</b></div><div class="bar-track"><div class="bar-fill" style="--w:2.44%"></div></div></div>
+            </div>
+          </article>
+          <article class="chart-card reveal">
+            <h3>Video sources</h3><p>Complementary first- and third-person viewpoints</p>
+            <div class="source-split" aria-label="42.65% egocentric and 57.35% exocentric"><span style="--w:42.65%">42.65%</span><span style="--w:57.35%">57.35%</span></div>
+            <div class="legend" style="margin-bottom:18px">
+              <div class="legend-row"><i class="dot" style="--c:var(--green)"></i><span>Egocentric</span><b>781</b></div>
+              <div class="legend-row"><i class="dot" style="--c:var(--cyan)"></i><span>Exocentric</span><b>1,050</b></div>
+            </div>
+            <div class="source-list">
+              <div class="source-chip"><b>394</b>Daily indoor</div><div class="source-chip"><b>254</b>Cooking</div>
+              <div class="source-chip"><b>201</b>Vlogs</div><div class="source-chip"><b>170</b>Handicraft</div>
+              <div class="source-chip"><b>162</b>Household chores</div><div class="source-chip"><b>160</b>Failure events</div>
+              <div class="source-chip"><b>140</b>Tutorials</div><div class="source-chip"><b>115</b>Sports</div>
+              <div class="source-chip"><b>108</b>Social &amp; leisure</div><div class="source-chip"><b>87</b>Driving</div>
+              <div class="source-chip"><b>40</b>Movies</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="agent">
+      <div class="container agent-grid">
+        <div class="reveal">
+          <span class="eyebrow">IPI-Agent</span>
+          <h2>Always attentive, never intrusive.</h2>
+          <p style="color:var(--muted)">A training-free agentic framework that turns existing offline MLLMs into more stable, stateful streaming assistants.</p>
+          <div class="agent-points">
+            <div class="agent-point"><span class="num">01</span><div><b>Interaction-control policy</b><p>Routes reactive queries and manages add, edit, and cancel instructions with explicit memory.</p></div></div>
+            <div class="agent-point"><span class="num">02</span><div><b>Temporal-gating mechanism</b><p>Combines recent frames with proactive memory to decide when to respond and when to stay silent.</p></div></div>
+            <div class="agent-point"><span class="num">03</span><div><b>Tool-based modularity</b><p>Separates gating, memory, and response generation for plug-and-play use across base MLLMs.</p></div></div>
+          </div>
+        </div>
+        <figure class="agent-figure reveal"><img src="IPI-Agent.png" alt="IPI-Agent architecture with interaction control, temporal gating, memory and response tools"></figure>
+      </div>
+    </section>
+
+    <section class="section alt" id="results">
+      <div class="container">
+        <div class="results-head reveal">
+          <div class="section-head"><span class="eyebrow">Leaderboard</span><h2>Current models are still far from human.</h2><p>Scores (%) across all nine IPIBench sub-categories and three task-family averages.</p></div>
+          <div class="legend-note"><i></i>best non-human score</div>
+        </div>
+        <div class="table-shell reveal">
+          <div class="table-scroll">
+            <table aria-label="IPIBench leaderboard">
+              <thead>
+                <tr><th rowspan="2">Model</th><th colspan="4" class="metric-group-purple">Proactive Monitoring</th><th colspan="4" class="metric-group-green">Proactive Task Management</th><th colspan="4" class="metric-group-cyan">Interleaved Reactive–Proactive</th></tr>
+                <tr><th>Timing</th><th>Under.</th><th>Repeat.</th><th>Avg.</th><th>Cancel</th><th>Modify</th><th>Multi</th><th>Avg.</th><th>R2P</th><th>RuP</th><th>RaP</th><th>Avg.</th></tr>
+              </thead>
+              <tbody>
+                <tr class="human"><td>Human Level</td><td>98.00</td><td>94.00</td><td>92.00</td><td>94.67</td><td>98.00</td><td>92.00</td><td>98.00</td><td>96.00</td><td>96.00</td><td>96.00</td><td>98.00</td><td>96.67</td></tr>
+                <tr class="group"><td colspan="13">Proprietary Models · Offline</td></tr>
+                <tr><td>Gemini 3 Pro</td><td>43.49</td><td>24.90</td><td class="best">18.40</td><td>28.93</td><td>19.44</td><td>21.84</td><td class="best">19.39</td><td>20.22</td><td>24.76</td><td>17.68</td><td>26.69</td><td>23.04</td></tr>
+                <tr><td>Gemini 2.5 Pro</td><td>45.36</td><td>25.26</td><td>13.21</td><td>27.94</td><td>24.54</td><td>20.81</td><td>16.78</td><td>20.71</td><td>21.17</td><td>17.54</td><td>28.24</td><td>22.32</td></tr>
+                <tr><td>GPT-5.4</td><td class="best">54.64</td><td>23.52</td><td>8.96</td><td>29.04</td><td class="best">38.43</td><td>24.50</td><td>7.57</td><td class="best">23.50</td><td>27.04</td><td>15.06</td><td>29.28</td><td>23.79</td></tr>
+                <tr><td>GPT-4o</td><td>50.59</td><td>25.99</td><td>13.68</td><td class="best">30.09</td><td>11.57</td><td class="best">31.88</td><td>14.18</td><td>19.21</td><td>27.04</td><td>17.68</td><td>26.17</td><td>23.63</td></tr>
+                <tr class="group"><td colspan="13">Open-source Models · Offline</td></tr>
+                <tr><td>LLaVA-OneVision-7B</td><td>12.14</td><td>8.66</td><td>0.00</td><td>6.93</td><td>1.39</td><td>1.01</td><td>0.47</td><td>0.96</td><td>3.91</td><td>0.00</td><td>3.89</td><td>2.60</td></tr>
+                <tr><td>InternVL3-8B</td><td>32.51</td><td>22.31</td><td>3.77</td><td>19.53</td><td>6.94</td><td>6.04</td><td>3.55</td><td>5.51</td><td>7.17</td><td>0.00</td><td>9.33</td><td>5.50</td></tr>
+                <tr><td>Qwen3-VL-8B</td><td>43.12</td><td>24.51</td><td>4.25</td><td>23.96</td><td>1.39</td><td>17.45</td><td>9.22</td><td>9.35</td><td>24.43</td><td>19.75</td><td>23.05</td><td>22.41</td></tr>
+                <tr><td>Qwen3.5-Plus</td><td>35.25</td><td>24.35</td><td>7.89</td><td>22.50</td><td>12.96</td><td>31.54</td><td>10.87</td><td>18.46</td><td class="best">32.25</td><td class="best">22.01</td><td>30.57</td><td class="best">28.28</td></tr>
+                <tr><td>GLM-4.6V</td><td>50.43</td><td class="best">27.59</td><td>10.85</td><td>29.62</td><td>15.28</td><td>24.16</td><td>9.69</td><td>16.38</td><td>22.15</td><td>6.77</td><td class="best">39.37</td><td>22.76</td></tr>
+                <tr class="group"><td colspan="13">Open-source Models · Online</td></tr>
+                <tr><td>VideoLLM-online-8B</td><td>14.63</td><td>0.14</td><td>1.82</td><td>5.53</td><td>7.87</td><td>1.68</td><td>6.62</td><td>5.39</td><td>0.00</td><td>1.10</td><td>1.55</td><td>0.88</td></tr>
+                <tr><td>Dispider</td><td>18.72</td><td>0.65</td><td>1.82</td><td>7.06</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+                <tr><td>Flash-VStream-7B</td><td>5.91</td><td>0.00</td><td>0.00</td><td>1.97</td><td>2.31</td><td>0.00</td><td>0.00</td><td>0.77</td><td>0.00</td><td>0.00</td><td>0.78</td><td>0.26</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-foot"><span>Higher is better. Under. = Understanding; Repeat. = Repeated Proactiveness.</span><span>Scroll horizontally to view all metrics →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="agent-results">
+      <div class="container">
+        <div class="section-head center reveal"><span class="eyebrow">IPI-Agent results</span><h2>One framework, consistent gains.</h2><p>IPI-Agent improves four representative MLLMs without additional training. Green values show absolute gains over each base model.</p></div>
+        <div class="gain-cards reveal">
+          <div class="gain-card"><span>Gemini 3 Pro</span><strong>+18.50</strong><small>Task Management Avg.</small></div>
+          <div class="gain-card"><span>GPT-5.4</span><strong>+5.87</strong><small>Task Management Avg.</small></div>
+          <div class="gain-card"><span>Qwen3.5-Plus</span><strong>+18.72</strong><small>Task Management Avg.</small></div>
+          <div class="gain-card"><span>Qwen3-VL-8B</span><strong>+17.39</strong><small>Task Management Avg.</small></div>
+        </div>
+        <div class="table-shell reveal">
+          <div class="table-scroll">
+            <table class="agent-table" aria-label="IPI-Agent effectiveness results">
+              <thead><tr><th>IPI-Agent Base</th><th colspan="4" class="metric-group-purple">Proactive Monitoring</th><th colspan="4" class="metric-group-green">Proactive Task Management</th><th colspan="4" class="metric-group-cyan">Interleaved Reactive–Proactive</th></tr><tr><th></th><th>Timing</th><th>Under.</th><th>Repeat.</th><th>Avg.</th><th>Cancel</th><th>Modify</th><th>Multi</th><th>Avg.</th><th>R2P</th><th>RuP</th><th>RaP</th><th>Avg.</th></tr></thead>
+              <tbody>
+                <tr><td>Gemini 3 Pro</td><td>56.27<span class="gain">+12.78</span></td><td>35.67<span class="gain">+10.77</span></td><td>28.30<span class="gain">+9.90</span></td><td>40.08<span class="gain">+11.15</span></td><td>51.85<span class="gain">+32.41</span></td><td>35.23<span class="gain">+13.39</span></td><td>29.08<span class="gain">+9.69</span></td><td>38.72<span class="gain">+18.50</span></td><td>30.62<span class="gain">+5.86</span></td><td>22.38<span class="gain">+4.70</span></td><td>29.53<span class="gain">+2.84</span></td><td>27.51<span class="gain">+4.47</span></td></tr>
+                <tr><td>GPT-5.4</td><td>57.20<span class="gain">+2.56</span></td><td>24.30<span class="gain">+0.78</span></td><td>10.85<span class="gain">+1.89</span></td><td>30.78<span class="gain">+1.74</span></td><td>48.61<span class="gain">+10.18</span></td><td>24.83<span class="gain">+0.33</span></td><td>14.66<span class="gain">+7.09</span></td><td>29.37<span class="gain">+5.87</span></td><td>28.01<span class="gain">+0.97</span></td><td>19.34<span class="gain">+4.28</span></td><td>33.42<span class="gain">+4.14</span></td><td>26.92<span class="gain">+3.13</span></td></tr>
+                <tr><td>Qwen3.5-Plus</td><td>52.80<span class="gain">+17.55</span></td><td>33.18<span class="gain">+8.83</span></td><td>18.42<span class="gain">+10.53</span></td><td>34.80<span class="gain">+12.30</span></td><td>52.78<span class="gain">+39.82</span></td><td>33.22<span class="gain">+1.68</span></td><td>25.53<span class="gain">+14.66</span></td><td>37.18<span class="gain">+18.72</span></td><td>32.25<span class="gain">+0.00</span></td><td>22.63<span class="gain">+0.62</span></td><td>35.95<span class="gain">+5.38</span></td><td>30.28<span class="gain">+2.00</span></td></tr>
+                <tr><td>Qwen3-VL-8B</td><td>46.62<span class="gain">+3.50</span></td><td>25.37<span class="gain">+0.86</span></td><td>15.09<span class="gain">+10.84</span></td><td>29.03<span class="gain">+5.07</span></td><td>44.91<span class="gain">+43.52</span></td><td>23.49<span class="gain">+6.04</span></td><td>11.82<span class="gain">+2.60</span></td><td>26.74<span class="gain">+17.39</span></td><td>27.36<span class="gain">+2.93</span></td><td>23.62<span class="gain">+3.87</span></td><td>30.57<span class="gain">+7.52</span></td><td>27.18<span class="gain">+4.77</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-foot"><span>Score on top; absolute gain over the original base MLLM below.</span><span>No additional training required.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="ablation">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">Ablation study</span><h2>Both components matter.</h2><p>Removing either interaction control or temporal gating degrades performance, using Qwen3-VL-8B as the base model.</p></div>
+        <div class="ablation-layout">
+          <aside class="ablation-callout reveal"><span>Largest degradation</span><strong class="big">−15.54</strong><b>Task Management Avg.</b><p>Without interaction control, the agent loses the stateful machinery needed to add, edit, and cancel proactive tasks.</p></aside>
+          <div class="table-shell reveal">
+            <div class="table-scroll">
+              <table aria-label="IPI-Agent ablation study">
+                <thead><tr><th>Variant / Δ from full</th><th colspan="4" class="metric-group-purple">Proactive Monitoring</th><th colspan="4" class="metric-group-green">Proactive Task Management</th><th colspan="4" class="metric-group-cyan">Interleaved Reactive–Proactive</th></tr><tr><th></th><th>Timing</th><th>Under.</th><th>Repeat.</th><th>Avg.</th><th>Cancel</th><th>Modify</th><th>Multi</th><th>Avg.</th><th>R2P</th><th>RuP</th><th>RaP</th><th>Avg.</th></tr></thead>
+                <tbody>
+                  <tr class="human"><td>Full IPI-Agent</td><td>46.62</td><td>25.37</td><td>15.09</td><td>29.03</td><td>44.91</td><td>23.49</td><td>11.82</td><td>26.74</td><td>27.36</td><td>23.62</td><td>30.57</td><td>27.18</td></tr>
+                  <tr><td>w/o Interaction Control</td><td class="negative">0.00</td><td class="negative">0.00</td><td class="negative">0.00</td><td class="negative">0.00</td><td class="negative">−40.95</td><td class="negative">−4.70</td><td class="negative">−0.24</td><td class="negative">−15.54</td><td class="negative">−1.81</td><td class="negative">−0.55</td><td class="negative">−3.11</td><td class="negative">−1.82</td></tr>
+                  <tr><td>w/o Temporal Gating</td><td class="negative">−3.50</td><td class="negative">−0.86</td><td class="negative">−10.84</td><td class="negative">−5.07</td><td class="negative">−6.95</td><td class="negative">−5.37</td><td class="negative">−1.65</td><td class="negative">−4.66</td><td class="negative">−0.32</td><td class="negative">−2.21</td><td class="negative">−3.63</td><td class="negative">−2.05</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="bibtex">
+      <div class="container">
+        <div class="citation-card reveal">
+          <div><span class="eyebrow" style="color:#8a72f0">Citation</span><h2>Build on IPIBench.</h2><p>If you find this work useful, please cite our paper.</p></div>
+          <div class="code-wrap">
+            <button class="copy-btn" type="button" data-copy>Copy BibTeX</button>
+            <pre><code id="bibtex-code">@article{li2026ipibench,
+  title={IPIBench: Evaluating Interactive Proactive Intelligence of MLLMs under Continuous Streams},
+  author={Li, Jinzhao and Chen, Yinuo and Song, Wenxuan and Lei, Yijia and Zhang, Yichi and Yan, Honglei and Pan, Panwang and Liu, Miao},
+  journal={arXiv preprint arXiv:2605.27074},
+  year={2026}
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">IPIBench · Evaluating Interactive Proactive Intelligence under Continuous Streams · 2026</div></footer>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in-view');
+        entry.target.querySelectorAll('.counter').forEach((el) => {
+          const target = Number(el.dataset.count);
+          const start = performance.now();
+          const duration = 900;
+          const tick = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(target * eased).toLocaleString('en-US');
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .14 });
+    revealItems.forEach((item) => observer.observe(item));
+
+    document.querySelector('[data-copy]').addEventListener('click', async (event) => {
+      const button = event.currentTarget;
+      const text = document.querySelector('#bibtex-code').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'Copied!';
+        setTimeout(() => button.textContent = 'Copy BibTeX', 1600);
+      } catch (_) {
+        const range = document.createRange();
+        range.selectNodeContents(document.querySelector('#bibtex-code'));
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        button.textContent = 'Selected';
+      }
+    });
+  </script>
+</body>
+</html>
