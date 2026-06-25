@@ -151,6 +151,20 @@
     .rest { color: var(--ink); }
     .subtitle { display: block; font-size: clamp(1.8rem, 3.6vw, 3.45rem); line-height: 1.05; letter-spacing: -.045em; }
     .authors { max-width: 900px; margin: 0 auto 8px; color: #35465c; font-size: 1.05rem; }
+    .author-role {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 5px;
+      padding: 1px 7px;
+      border: 1px solid rgba(22, 164, 99, .24);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(22, 164, 99, .08);
+      font-size: .62em;
+      font-weight: 800;
+      letter-spacing: .02em;
+      vertical-align: middle;
+    }
     .affiliations { margin-bottom: 26px; color: var(--muted); font-size: .92rem; }
     .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
     .btn {
@@ -376,17 +390,17 @@
         <span class="ipi-title"><span class="letter i1">I</span><span class="rest">nteractive</span> <span class="letter p">P</span><span class="rest">roactive</span> <span class="letter i2">I</span><span class="rest">ntelligence</span></span>
         <span class="subtitle">of MLLMs under Continuous Streams</span>
       </h1>
-      <p class="authors">Jinzhao Li<sup>1,2</sup>, Yinuo Chen<sup>1</sup>, Wenxuan Song<sup>1</sup>, Yijia Lei<sup>1</sup>, Yichi Zhang<sup>1</sup>, Honglei Yan<sup>2</sup>, Panwang Pan<sup>2</sup>, Miao Liu<sup>1,†</sup></p>
+      <p class="authors">Jinzhao Li<sup>1,2</sup>, Yinuo Chen<sup>1</sup>, Wenxuan Song<sup>1</sup>, Yijia Lei<sup>1</sup>, Yichi Zhang<sup>1</sup>, Honglei Yan<sup>2</sup>, Panwang Pan<sup>2</sup><span class="author-role">Project Lead</span>, Miao Liu<sup>1,†</sup></p>
       <p class="affiliations"><sup>1</sup>College of AI, Tsinghua University &nbsp;·&nbsp; <sup>2</sup>ByteDance &nbsp;·&nbsp; <sup>†</sup>Corresponding author</p>
       <div class="hero-actions">
         <a class="btn primary" href="paper.pdf" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h8l5 5v15H6V2Zm7 1.8V8h4.2L13 3.8ZM8.5 12h8v1.6h-8V12Zm0 3.4h8V17h-8v-1.6Z"/></svg>
           Paper
         </a>
-        <span class="btn disabled" aria-disabled="true">
+        <a class="btn" href="https://github.com/lijinzhao30/IPI" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .7A11.3 11.3 0 0 0 8.43 22.72c.57.1.78-.25.78-.55v-2.12c-3.18.69-3.85-1.35-3.85-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.03-.7.08-.69.08-.69 1.14.08 1.75 1.17 1.75 1.17 1.02 1.74 2.67 1.24 3.32.94.1-.73.4-1.23.72-1.51-2.53-.29-5.2-1.27-5.2-5.65 0-1.25.45-2.26 1.17-3.06-.12-.29-.5-1.45.11-3.02 0 0 .96-.3 3.14 1.17a10.9 10.9 0 0 1 5.72 0c2.18-1.48 3.14-1.17 3.14-1.17.61 1.57.23 2.73.11 3.02.73.8 1.17 1.81 1.17 3.06 0 4.39-2.67 5.35-5.21 5.64.41.35.77 1.05.77 2.13v3.15c0 .3.21.66.79.55A11.3 11.3 0 0 0 12 .7Z"/></svg>
-          Code <span class="soon">Coming soon</span>
-        </span>
+          Code
+        </a>
         <span class="btn disabled" aria-disabled="true"><span aria-hidden="true">🤗</span> Dataset <span class="soon">Coming soon</span></span>
         <a class="btn" href="#demo">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7L8 5Z"/></svg>
