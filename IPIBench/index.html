@@ -104,6 +104,27 @@
       mask-image: linear-gradient(to bottom, black, transparent 76%);
     }
     .hero-inner { position: relative; z-index: 1; text-align: center; }
+    .venue-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 auto 28px;
+      padding: 11px 22px 12px;
+      border: 1px solid rgba(255, 255, 255, .4);
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(135deg, #7047eb 0%, #6334e5 100%);
+      box-shadow: 0 14px 34px rgba(112, 71, 235, .25);
+      line-height: 1;
+    }
+    .venue-badge span:first-child {
+      font-size: .67rem;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .venue-badge strong { font-size: 1.05rem; letter-spacing: -.02em; }
+    .venue-badge .fire { font-size: 1.18rem; }
     h1 {
       max-width: 1060px;
       margin: 0 auto 26px;
@@ -370,6 +391,9 @@
 
   <header class="hero" id="top">
     <div class="container hero-inner">
+      <div class="venue-badge" aria-label="Accepted at NeurIPS E and D 2026">
+        <span>Accepted at</span><strong>NeurIPS E&amp;D 2026</strong><span class="fire" aria-hidden="true">🔥</span>
+      </div>
       <h1>
         <span class="title-prefix"><span class="c-i1">I</span><span class="c-p">P</span><span class="c-i2">I</span>Bench:</span>
         <span class="title-evaluating">Evaluating</span>
