@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ALIVE: Making Streaming Video Models Interactive</title>
+  <meta name="description" content="ALIVE brings proactive monitoring, streaming task coordination, and feedback-seeking interaction to streaming video models. Watch the demo and explore the research.">
+  <meta name="theme-color" content="#F5F7FA">
+  <meta property="og:title" content="ALIVE: Making Streaming Video Models Interactive">
+  <meta property="og:description" content="Toward interactive streaming. Watch ALIVE coordinate evolving tasks and seek the feedback needed to answer.">
+  <meta property="og:image" content="https://lijinzhao30.github.io/ALIVE/assets/demo-poster.webp">
+  <meta property="og:url" content="https://lijinzhao30.github.io/ALIVE/">
+  <link rel="canonical" href="https://lijinzhao30.github.io/ALIVE/">
+  <link rel="icon" href="assets/models/alive.png"><link rel="preload" href="assets/fonts/Manrope.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css"><script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="container" aria-label="Main navigation">
+  <a class="brand" href="#main" aria-label="ALIVE home"><img src="assets/logo.webp" width="136" height="51" alt="ALIVE"></a>
+  <div class="nav-links"><a href="#capabilities">Interaction</a><a href="#learning">Learning</a><a href="#data">Data</a><a href="#results">Results</a></div>
+  <a class="paper-link" href="#demo">Watch demo <span aria-hidden="true">↓</span></a>
+</nav></header>
+<main id="main">
+  <section class="hero container" aria-labelledby="title">
+    <div class="hero-heading"><p class="eyebrow"><span class="signal-dot"></span>TOWARD INTERACTIVE STREAMING</p>
+    <h1 id="title"><span>ALIVE:</span> Making Streaming Video Models Interactive</h1>
+    <p>Continuously observing the world. Interacting as it unfolds.</p>
+    <div class="resource-links" aria-label="Project resources">
+      <button class="resource-link" disabled aria-label="Paper — link coming soon" title="Paper link coming soon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg>Paper</button>
+      <a class="resource-link" href="https://github.com/lijinzhao30/ALIVE" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.54 21.82c.56.1.77-.24.77-.54v-2.09c-3.13.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.71 2.62 1.22 3.26.94.1-.73.4-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.08 1.15a10.7 10.7 0 0 1 5.61 0c2.13-1.45 3.08-1.15 3.08-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.63 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8Z"/></svg>Code</a>
+      <button class="resource-link" disabled aria-label="Model — link coming soon" title="Model link coming soon"><img src="assets/huggingface.png" width="23" height="23" alt="Hugging Face">Model</button>
+      <button class="resource-link" disabled aria-label="Dataset — link coming soon" title="Dataset link coming soon"><img src="assets/huggingface.png" width="23" height="23" alt="Hugging Face">Dataset</button>
+      <a class="resource-link" href="#demo"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="m10 8 6 4-6 4Z" fill="currentColor" stroke="none"/></svg>Demo</a>
+    </div></div>
+    <div class="film-shell" id="demo">
+      <video id="demo-video" controls playsinline preload="none" poster="assets/demo-poster.webp" aria-label="ALIVE research and bilingual capability demonstration">
+        <source src="assets/alive-demo.mp4" type="video/mp4">
+        <track kind="chapters" src="assets/chapters.vtt" srclang="en" label="Chapters">
+        Your browser does not support video. <a href="assets/alive-demo.mp4">Download the demo.</a>
+      </video>
+      <button class="film-play" id="film-play" aria-label="Play the ALIVE demo"><span class="play-circle"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5 20 12 8 19.5Z" fill="currentColor"/></svg></span><span>Watch ALIVE in action<small>English + 中文 · 4:38</small></span></button>
+    </div>
+    <div class="chapters" aria-label="Demo chapters">
+      <button data-seek="0" class="chapter active"><span>01</span><strong>The idea</strong><small>00:00</small></button>
+      <button data-seek="36.4" class="chapter"><span>02</span><strong>Streaming Task Coordination</strong><small>00:36</small></button>
+      <button data-seek="147.466667" class="chapter"><span>03</span><strong>Feedback-Seeking Interaction</strong><small>02:27</small></button>
+      <button data-seek="259.533333" class="chapter"><span>04</span><strong>Five benchmarks</strong><small>04:19</small></button>
+    </div>
+    <p class="video-error" id="video-error" hidden>The video could not load. <a href="assets/alive-demo.mp4">Open the video directly ↗</a></p>
+  </section>
+
+  <section class="people container" aria-label="Authors and affiliations">
+    <div class="authors">
+      <span>Jinzhao Li<sup>1,3,*</sup></span><span>Yuan Xu<sup>2,3,*</sup></span><span>Jinxuan Wu<sup>4</sup></span><span>Yukun Wang<sup>1</sup></span><span>Yijia Lei<sup>1</sup></span><span>Hanyu Ji<sup>2</sup></span><span>Yinuo Chen<sup>1</sup></span><span>Zining Huang<sup>1</sup></span><span>Chi Zhang<sup>1</sup></span><span>Hang Ye<sup>2</sup></span><span>Yiwu Zhong<sup>2</sup></span><span>Honglei Yan<sup>3</sup></span><span>Panwang Pan<sup>3</sup></span><span>Yizhou Wang<sup>2</sup></span><span>Yin Li<sup>5</sup></span><span>Miao Liu<sup>1,†</sup></span>
+    </div>
+    <p class="author-notes">* Equal contribution <span>† Corresponding author</span></p>
+    <div class="institutions">
+      <div><img src="assets/institutions/1.webp" width="58" height="58" alt=""><span><sup>1</sup> Tsinghua University</span></div>
+      <div><img src="assets/institutions/2.webp" width="58" height="58" alt=""><span><sup>2</sup> Peking University</span></div>
+      <div><img src="assets/institutions/3.webp" width="58" height="58" alt=""><span><sup>3</sup> ByteDance</span></div>
+      <div><img src="assets/institutions/4.webp" width="58" height="58" alt=""><span><sup>4</sup> Beihang University</span></div>
+      <div><img src="assets/institutions/5.webp" width="58" height="58" alt=""><span><sup>5</sup> University of Wisconsin–Madison</span></div>
+    </div>
+  </section>
+
+  <section id="capabilities" class="section container">
+    <div class="section-heading reveal"><p class="eyebrow">THE NEXT STEP</p><h2>Toward interactive streaming.</h2><p>Streaming models can answer questions and monitor events. ALIVE goes further: coordinating changing requests and seeking the feedback needed to proceed.</p></div>
+    <div class="capability-tabs" aria-label="ALIVE interaction capabilities">
+      <article class="cap-tab" data-mode="monitor"><span class="tab-index">01</span><strong>Proactive Monitoring</strong><span>Respond when the moment is right.</span></article>
+      <article class="cap-tab" data-mode="coordinate"><span class="tab-index">02</span><strong>Streaming Task Coordination</strong><span>Keep up with evolving requests.</span></article>
+      <article class="cap-tab" data-mode="feedback"><span class="tab-index">03</span><strong>Feedback-Seeking Interaction</strong><span>Seek the evidence needed to answer.</span></article>
+    </div>
+    <figure class="paper-figure reveal"><button class="figure-open" data-figure="teaser" aria-label="Enlarge ALIVE overview figure"><img width="2800" height="864" src="assets/figures/teaser.webp" alt="ALIVE overview: proactive monitoring, streaming task coordination, feedback-seeking interaction, and benchmark results" loading="lazy"><span>Explore the figure <b aria-hidden="true">↗</b></span></button><figcaption>Three capabilities for interaction along a continuous stream.</figcaption></figure>
+    <details class="abstract"><summary>Read the abstract <span aria-hidden="true">+</span></summary><p>Streaming video LLMs can continuously observe the world, yet often handle user requests in isolation. We introduce <strong>ALIVE</strong>, an interactive streaming video model supporting proactive monitoring, streaming task coordination, and feedback-seeking interaction. We construct <strong>ALIVE-SFT-288K</strong> and <strong>ALIVE-RL-3K</strong> for two-stage training. Contrastive supervised fine-tuning teaches when and how to respond, while reinforcement learning with <em>Behavior-Aligned Credit Assignment</em> combines trajectory-level and local advantages to refine decisions, responses, and silence across multi-turn interactions. We also introduce <strong>FSI-Bench</strong> to evaluate feedback seeking and subsequent task completion. ALIVE achieves the highest overall scores among the compared models on four public benchmarks and FSI-Bench, demonstrating strong streaming understanding and interactive capabilities.</p></details>
+  </section>
+
+  <section id="learning" class="section section-tint"><div class="container">
+    <div class="section-heading reveal"><p class="eyebrow">LEARNING TO INTERACT</p><h2>Decide. Respond. Know when to wait.</h2><p>Two stages teach a single model to choose an appropriate strategy, answer accurately, and remain silent when a response is unwarranted.</p></div>
+    <div class="learning-grid">
+      <article class="learning-stage stage-sft reveal"><div class="stage-label"><span>STAGE 01</span><svg width="45" height="45" viewBox="0 0 45 45" aria-hidden="true"><path d="M8 11h21v15H8zm8 8h21v15H16" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><h3>Contrastive SFT</h3><p>Similar visual observations can call for different behaviors. Controlled contrasts teach the role of available evidence, active requests, and user feedback.</p><div class="contrast-row"><span>Respond <b>R</b></span><span class="contrast-vs">↔</span><span>Remain silent <b>S</b></span></div><div class="stage-tags"><span>Action-strategy contrasts</span><span>Response-gate contrasts</span></div></article>
+      <article class="learning-stage stage-rl reveal"><div class="stage-label"><span>STAGE 02</span><svg width="45" height="45" viewBox="0 0 45 45" aria-hidden="true"><circle cx="22" cy="22" r="15" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 5"/><path d="M13 24h6l4-10 5 17 4-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><h3>RL with <span>Behavior-Aligned Credit Assignment</span></h3><p>Trajectory-level and local advantages refine behavior across multi-turn interactions, aligning credit with the requirements of each interaction.</p><div class="credit-flow"><span>Trajectory-level</span><b>+</b><span>Behavior-aligned local</span></div><div class="stage-tags"><span>Strategy selection</span><span>Task response</span><span>Critical silence</span></div></article>
+    </div>
+    <figure class="paper-figure reveal"><button class="figure-open" data-figure="method" aria-label="Enlarge ALIVE training method figure"><img width="2800" height="1049" src="assets/figures/method.webp" alt="Contrastive SFT and reinforcement learning with Behavior-Aligned Credit Assignment" loading="lazy"><span>Explore the figure <b aria-hidden="true">↗</b></span></button><figcaption>Contrastive supervision establishes interaction behaviors; reinforcement learning refines them on model-generated trajectories.</figcaption></figure>
+  </div></section>
+
+  <section id="data" class="section container">
+    <div class="section-heading reveal"><p class="eyebrow">DATA & EVALUATION</p><h2>Built around sustained interaction.</h2><p>Temporally grounded interaction data, paired with a benchmark for seeking feedback and completing the task.</p></div>
+    <div class="resource-grid">
+      <article class="resource-card blue reveal"><span class="resource-name">ALIVE-SFT-288K</span><strong>288K</strong><h3>Contrastive supervision</h3><p>288,436 interaction examples for supervised fine-tuning.</p></article>
+      <article class="resource-card orange reveal"><span class="resource-name">ALIVE-RL-3K</span><strong>3K</strong><h3>Behavior refinement</h3><p>3,523 interaction examples for reinforcement learning.</p></article>
+      <article class="resource-card purple reveal"><span class="resource-name">FSI-BENCH</span><strong>1,235</strong><h3>Feedback-seeking episodes</h3><p>Four tasks test strategy selection and subsequent task completion.</p></article>
+    </div>
+    <figure class="paper-figure reveal"><button class="figure-open" data-figure="dataset" aria-label="Enlarge ALIVE dataset construction and statistics figure"><img width="2800" height="1159" src="assets/figures/dataset.webp" alt="ALIVE dataset construction, task distributions, and diverse video sources" loading="lazy"><span>Explore the figure <b aria-hidden="true">↗</b></span></button><figcaption>Data construction and distributions across monitoring, task coordination, and feedback seeking.</figcaption></figure>
+  </section>
+
+  <section id="results" class="section results-section"><div class="container wide">
+    <div class="section-heading reveal"><p class="eyebrow">FIVE BENCHMARKS</p><h2>Strong understanding. Strong interaction.</h2><p>The highest overall scores among the compared models on four public benchmarks and FSI-Bench.</p></div>
+    <div class="results-tools"><div class="model-legend" aria-label="Models in the comparison"><span><img src="assets/models/alive.png" width="30" height="30" alt="">ALIVE</span><span><img src="assets/models/joy.png" width="30" height="30" alt="">JoyAI-VL-Interaction</span><span><img src="assets/models/aura.png" width="30" height="30" alt="">AURA</span><span><img src="assets/models/videochat.png" width="30" height="30" alt="">VideoChat3</span></div><button class="text-button" id="replay-results">Replay results <span aria-hidden="true">↻</span></button></div>
+    <div class="benchmark-grid" id="benchmark-grid"></div>
+    <noscript><p>ALIVE overall scores: OVO-Bench 68.9; StreamingBench 76.0; ProactiveVideoQA 51.6; IPIBench 40.3; FSI-Bench EDP 52.8. See the paper for full comparisons.</p></noscript>
+    <div class="result-domains"><span>General streaming video understanding</span><span>Streaming interaction</span></div>
+    <details class="score-details"><summary>View scores and evaluation metrics <span aria-hidden="true">+</span></summary><div class="table-scroll"><table><caption>Overall scores reported in the ALIVE paper. Higher is better.</caption><thead><tr><th scope="col">Model</th><th scope="col">OVO-Bench</th><th scope="col">StreamingBench</th><th scope="col">ProactiveVideoQA</th><th scope="col">IPIBench</th><th scope="col">FSI-Bench</th></tr></thead><tbody><tr><th scope="row">ALIVE</th><td>68.9</td><td>76.0</td><td>51.6</td><td>40.3</td><td>52.8</td></tr><tr><th scope="row">JoyAI-VL-Interaction</th><td>60.6</td><td>67.4</td><td>28.8</td><td>20.2</td><td>17.4</td></tr><tr><th scope="row">AURA</th><td>65.3</td><td>73.1</td><td>32.0</td><td>21.6</td><td>8.3</td></tr><tr><th scope="row">VideoChat3</th><td>58.8</td><td>68.7</td><td>37.6</td><td>12.0</td><td>5.9</td></tr></tbody></table></div><p>OVO-Bench, StreamingBench and IPIBench: overall accuracy (%). ProactiveVideoQA: PAUC at ω = 0.5. FSI-Bench: four-task macro accuracy (%) under the Explicit Decision Protocol (EDP). Bars share a zero baseline and a 0–80 scale. These are the paper's reported comparisons, not a live leaderboard.</p></details>
+  </div></section>
+
+  <section class="closing container"><img src="assets/logo.webp" width="190" height="72" alt="ALIVE"><h2>Making streaming video models interactive.</h2><p>Continuously perceive. Sustain meaningful interaction.</p><div class="closing-links"><a class="button primary" href="#demo">Watch the demo <span aria-hidden="true">↑</span></a><button class="button" disabled title="Paper link coming soon">Paper <span aria-hidden="true">↗</span></button></div></section>
+</main>
+<footer class="container"><span>ALIVE · 2026</span><a href="https://lijinzhao30.github.io/IPIBench/">Related work: IPIBench ↗</a><details><summary>Credits</summary><p>Demo music: “Life of Riley” by Kevin MacLeod (<a href="https://incompetech.com/">incompetech.com</a>), <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Model icons belong to their respective projects. Manrope is licensed under the SIL Open Font License.</p></details></footer>
+<dialog id="figure-dialog" aria-labelledby="figure-title"><div class="dialog-head"><h2 id="figure-title">ALIVE overview</h2><a id="figure-pdf" href="assets/figures/teaser.pdf" target="_blank" rel="noopener">Open PDF ↗</a><button id="close-figure" aria-label="Close figure">×</button></div><div class="figure-scroll"><img id="full-figure" src="assets/figures/teaser.webp" alt="ALIVE overview"></div><p>Scroll to inspect the figure. Press Esc to close.</p></dialog>
+</body>
+</html>
