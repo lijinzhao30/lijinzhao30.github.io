@@ -9,7 +9,7 @@ This directory is deployed as `ALIVE/` in `lijinzhao30/lijinzhao30.github.io`. I
 ## Content and behavior
 
 - The full 4:38 research demo is at the top, with clickable chapter navigation. Its web encode is 1600 × 900 H.264 with AAC audio, approximately 49 MB, and supports progressive playback.
-- Paper, Model, and Dataset are intentionally disabled until their release URLs are available. Code links to https://github.com/lijinzhao30/ALIVE. Demo scrolls to the player. Model and Dataset use the Hugging Face organization icon.
+- Paper links to https://arxiv.org/pdf/2611.21366 in both the top resource bar and the closing section. Model and Dataset are intentionally disabled until their release URLs are available. Code links to https://github.com/lijinzhao30/ALIVE. Demo scrolls to the player. Model and Dataset use the Hugging Face organization icon.
 - Three static capability cards use blue, purple, and orange. They have no selected state or illustrative animation panel.
 - The five benchmark charts reproduce the approved demo's model order, metrics, values, icons, and colors. FSI-Bench shows EDP only. All charts use the same zero baseline and 0–80 scale, with an accessible numeric table and a replay button.
 - `teaser`, `method`, and `dataset` figures come from the local `ALIVE_Arxiv/figs` PDFs. Figures open in a zoomable dialog with PDF access.
@@ -18,7 +18,7 @@ This directory is deployed as `ALIVE/` in `lijinzhao30/lijinzhao30.github.io`. I
 
 ## Updating release links
 
-Replace the corresponding disabled buttons in `index.html` with anchors when URLs are available. The paper button in the closing section should be updated at the same time. The original manuscript and `.bib` files are not part of this website and were not modified.
+Replace the disabled Model and Dataset buttons in `index.html` with anchors when URLs are available. If the paper URL changes, update both Paper links together. The original manuscript and `.bib` files are not part of this website and were not modified.
 
 ## Local preview
 
