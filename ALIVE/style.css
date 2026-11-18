@@ -38,7 +38,6 @@ dialog{width:95vw;max-width:1600px;padding:0;border:1px solid #d5e0e8;border-rad
 .demo-grid-portrait .demo-card:nth-last-child(3){grid-column:2/span 2}
 .demo-grid-landscape{grid-template-columns:repeat(6,minmax(0,1fr))}
 .demo-grid-landscape .demo-card{grid-column:span 2}
-.demo-grid-landscape .demo-card:last-child{grid-column:3/span 2}
 .demo-card{--demo-accent:#237ac4;--demo-tint:#e8f3fd;--demo-border:#c9dfef;min-width:0;background:#fff;border:1px solid var(--demo-border);border-radius:22px;overflow:hidden;box-shadow:0 8px 24px #102b4606;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s}
 [data-category=coordinate]{--demo-accent:#795bc0;--demo-tint:#f0eafa;--demo-border:#ddd0ed}
 [data-category=feedback]{--demo-accent:#b65d31;--demo-tint:#fff0e5;--demo-border:#ecd5c6}

@@ -250,5 +250,33 @@
     "video": "assets/demos/webvideo/open-freezer.mp4",
     "poster": "assets/demos/webvideo/open-freezer.webp",
     "portrait": false
+  },
+  {
+    "id": "web11",
+    "group": "webvideo",
+    "slug": "filter-replacement",
+    "category": "coordinate",
+    "capability": "Streaming Task Coordination",
+    "language": "en",
+    "title": "Track a filter replacement",
+    "description": "Monitors both removal of the old filter and installation of the new one, with a reminder for each step.",
+    "duration": 24.0,
+    "video": "assets/demos/webvideo/filter-replacement.mp4",
+    "poster": "assets/demos/webvideo/filter-replacement.webp",
+    "portrait": false
+  },
+  {
+    "id": "web12",
+    "group": "webvideo",
+    "slug": "ticket-price",
+    "category": "feedback",
+    "capability": "Feedback-Seeking Interaction",
+    "language": "en",
+    "title": "Reveal the ticket price",
+    "description": "Asks the user to select the 1-Day Ventra Ticket, then reads its price from the updated screen.",
+    "duration": 16.0,
+    "video": "assets/demos/webvideo/ticket-price.mp4",
+    "poster": "assets/demos/webvideo/ticket-price.webp",
+    "portrait": false
   }
 ]
