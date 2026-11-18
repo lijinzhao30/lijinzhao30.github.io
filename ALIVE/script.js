@@ -93,3 +93,70 @@ const navigationObserver = new IntersectionObserver(entries => entries.forEach(e
   if (entry.isIntersecting) $$('.nav-links a').forEach(a => a.classList.toggle('active', a.hash === '#' + entry.target.id));
 }), {rootMargin:'-15% 0px -65% 0px', threshold:0});
 $$('section[id]').forEach(section => navigationObserver.observe(section));
+
+// All recordings are present in the HTML. Only the selected video is fetched.
+const demoLinks = $$('.demo-open');
+const demoDialog = $('#demo-dialog');
+const galleryPlayer = $('#gallery-player');
+let activeDemo = -1;
+let returnToDemo = null;
+let playRequest = 0;
+function openDemo(index) {
+  if (index < 0 || index >= demoLinks.length) return;
+  const link = demoLinks[index];
+  const card = link.closest('.demo-card');
+  activeDemo = index;
+  const request = ++playRequest;
+  galleryPlayer.pause();
+  film.pause();
+  demoDialog.dataset.category = card.dataset.category;
+  demoDialog.classList.toggle('is-portrait', link.dataset.portrait === 'true');
+  $('#demo-dialog-tag').textContent = card.querySelector('.demo-tag').textContent;
+  const title = card.querySelector('h4');
+  $('#demo-dialog-title').textContent = title.textContent;
+  $('#demo-dialog-title').lang = title.lang;
+  $('#demo-dialog-description').textContent = card.querySelector('.demo-copy p').textContent;
+  $('#demo-dialog-description').lang = title.lang;
+  const collection = link.closest('.demo-collection');
+  const peers = [...collection.querySelectorAll('.demo-open')];
+  $('#demo-dialog-position').textContent = (collection.id === 'realworld-demos' ? 'Real-world' : 'Web video') + ' · ' + (peers.indexOf(link) + 1) + ' / ' + peers.length;
+  $('#previous-demo').disabled = index === 0;
+  $('#next-demo').disabled = index === demoLinks.length - 1;
+  $('#gallery-video-error').hidden = true;
+  $('#gallery-video-direct').href = link.href;
+  galleryPlayer.setAttribute('aria-label', title.textContent);
+  galleryPlayer.poster = link.querySelector('img').src;
+  galleryPlayer.src = link.href;
+  if (!demoDialog.open) demoDialog.showModal();
+  galleryPlayer.play().catch(() => {
+    // A browser may require a second click; native controls remain available.
+    if (request === playRequest && galleryPlayer.error) $('#gallery-video-error').hidden = false;
+  });
+}
+demoLinks.forEach((link,index) => link.addEventListener('click', event => {
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  returnToDemo = link;
+  openDemo(index);
+}));
+$('#previous-demo').addEventListener('click', () => openDemo(activeDemo - 1));
+$('#next-demo').addEventListener('click', () => openDemo(activeDemo + 1));
+$('#close-demo').addEventListener('click', () => demoDialog.close());
+demoDialog.addEventListener('close', () => {
+  ++playRequest;
+  galleryPlayer.pause();
+  galleryPlayer.removeAttribute('src');
+  galleryPlayer.load();
+  returnToDemo?.focus({preventScroll:true});
+});
+demoDialog.addEventListener('click', event => {
+  const box = demoDialog.getBoundingClientRect();
+  if (event.target === demoDialog && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) demoDialog.close();
+});
+galleryPlayer.addEventListener('error', () => {
+  if (demoDialog.open && galleryPlayer.hasAttribute('src')) $('#gallery-video-error').hidden = false;
+});
+// Prevent the research film and a gallery clip from speaking over one another.
+[film,galleryPlayer].forEach(player => player.addEventListener('play', () => {
+  [film,galleryPlayer].forEach(other => { if (other !== player) other.pause(); });
+}));
