@@ -25,7 +25,6 @@ dialog{width:95vw;max-width:1600px;padding:0;border:1px solid #d5e0e8;border-rad
 .demo-gallery-nav{display:flex;justify-content:center;gap:12px;margin-bottom:58px}
 .demo-gallery-nav a{display:flex;align-items:center;gap:15px;padding:11px 20px;border:1px solid var(--line);border-radius:30px;background:#fff;font-size:12px;font-weight:700;transition:background .2s,transform .2s}
 .demo-gallery-nav a:hover{background:#eaf2fb;transform:translateY(-2px)}
-.demo-gallery-nav a>span:first-child{font-size:10px;color:var(--muted);background:#eff3f7;padding:2px 7px;border-radius:6px;font-variant-numeric:tabular-nums}
 .demo-collection{scroll-margin-top:105px}
 .demo-collection+.demo-collection{margin-top:76px;padding-top:56px;border-top:1px solid var(--line)}
 .demo-collection-head{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:28px}

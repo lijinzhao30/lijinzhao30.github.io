@@ -9,7 +9,7 @@ This directory is deployed as `ALIVE/` in `lijinzhao30/lijinzhao30.github.io`. I
 ## Content and behavior
 
 - The full 4:38 research demo is at the top, with clickable chapter navigation. Its web encode is 1600 × 900 H.264 with AAC audio, approximately 49 MB, and supports progressive playback.
-- Paper links to https://arxiv.org/pdf/2611.21366 in both the top resource bar and the closing section. Model and Dataset are intentionally disabled until their release URLs are available. Code links to https://github.com/lijinzhao30/ALIVE. Demo scrolls to the player. Model and Dataset use the Hugging Face organization icon.
+- Paper links to https://arxiv.org/abs/2611.21366 in both the top resource bar and the closing section. Model links to https://huggingface.co/ALIVE-Team/ALIVE. Dataset and FSI-Bench are intentionally disabled until their release URLs are available, matching the ALIVE repository. Code links to https://github.com/lijinzhao30/ALIVE. Demo scrolls to the player. Model, Dataset, and FSI-Bench use the Hugging Face organization icon.
 - The gallery at `#demos`, between affiliations and the research overview, shows all 18 recordings: 8 live real-world interactions and 10 web-video demos. No clips are hidden behind filters. Blue, purple, and orange tags indicate Proactive Monitoring, Streaming Task Coordination, and Feedback-Seeking Interaction. Descriptions follow the dialogue language.
 - Gallery cards open an accessible player with previous/next controls. Videos load only on demand; closing unloads the player, and playing a clip pauses the research film. Original audio and full frames are preserved. Two HEVC sources were converted to H.264; the other videos were losslessly remuxed for progressive playback. Metadata is in `assets/demos/catalog.json`; cards are also in the HTML so they remain visible without JavaScript.
 - Three static capability cards use blue, purple, and orange. They have no selected state or illustrative animation panel.
@@ -20,7 +20,7 @@ This directory is deployed as `ALIVE/` in `lijinzhao30/lijinzhao30.github.io`. I
 
 ## Updating release links
 
-Replace the disabled Model and Dataset buttons in `index.html` with anchors when URLs are available. If the paper URL changes, update both Paper links together. The original manuscript and `.bib` files are not part of this website and were not modified.
+Replace the disabled Dataset and FSI-Bench buttons in `index.html` with anchors when URLs are available. If the paper URL changes, update both Paper links together. The original manuscript and `.bib` files are not part of this website and were not modified.
 
 ## Local preview
 
