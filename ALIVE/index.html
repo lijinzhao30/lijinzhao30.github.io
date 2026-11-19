@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#F5F7FA">
   <meta property="og:title" content="ALIVE: Making Streaming Video Models Interactive">
   <meta property="og:description" content="Toward interactive streaming. Watch ALIVE coordinate evolving tasks and seek the feedback needed to answer.">
-  <meta property="og:image" content="https://lijinzhao30.github.io/ALIVE/assets/demo-poster.webp">
+  <meta property="og:image" content="https://lijinzhao30.github.io/ALIVE/assets/demo-poster.webp?v=951cfea13d7f">
   <meta property="og:url" content="https://lijinzhao30.github.io/ALIVE/">
   <link rel="canonical" href="https://lijinzhao30.github.io/ALIVE/">
   <link rel="icon" href="assets/models/alive.png"><link rel="preload" href="assets/fonts/Manrope.ttf" as="font" type="font/ttf" crossorigin>
@@ -33,11 +33,13 @@
       <a class="resource-link" href="#demo"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="m10 8 6 4-6 4Z" fill="currentColor" stroke="none"/></svg>Demo</a>
     </div></div>
     <div class="film-shell" id="demo">
-      <video id="demo-video" controls playsinline preload="none" poster="assets/demo-poster.webp" aria-label="ALIVE research and bilingual capability demonstration">
-        <source src="assets/alive-demo.mp4" type="video/mp4">
+      <video id="demo-video" controls playsinline preload="none" poster="assets/demo-poster.webp?v=951cfea13d7f" aria-label="ALIVE research and bilingual capability demonstration">
+        <source src="assets/alive-demo.mp4?v=951cfea13d7f" type="video/mp4">
         <track kind="chapters" src="assets/chapters.vtt" srclang="en" label="Chapters">
-        Your browser does not support video. <a href="assets/alive-demo.mp4">Download the demo.</a>
+        Your browser does not support video. <a href="assets/alive-demo.mp4?v=951cfea13d7f">Download the demo.</a>
       </video>
+    </div>
+    <div class="film-action">
       <button class="film-play" id="film-play" aria-label="Play the ALIVE demo"><span class="play-circle"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5 20 12 8 19.5Z" fill="currentColor"/></svg></span><span>Watch ALIVE in action<small>English + 中文 · 4:38</small></span></button>
     </div>
     <div class="chapters" aria-label="Demo chapters">
@@ -46,7 +48,7 @@
       <button data-seek="147.466667" class="chapter"><span>03</span><strong>Feedback-Seeking Interaction</strong><small>02:27</small></button>
       <button data-seek="259.533333" class="chapter"><span>04</span><strong>Five benchmarks</strong><small>04:19</small></button>
     </div>
-    <p class="video-error" id="video-error" hidden>The video could not load. <a href="assets/alive-demo.mp4">Open the video directly ↗</a></p>
+    <p class="video-error" id="video-error" hidden>The video could not load. <a href="assets/alive-demo.mp4?v=951cfea13d7f">Open the video directly ↗</a></p>
   </section>
 
   <section class="people container" aria-label="Authors and affiliations">
